@@ -31,35 +31,20 @@ function ProductForm() {
   const alert = useAlert();
 
   const colors = [
-    {
-      name: 'White',
-      class: 'bg-white',
-      selectedClass: 'ring-gray-400',
-      id: 'white',
-    },
-    {
-      name: 'Gray',
-      class: 'bg-gray-200',
-      selectedClass: 'ring-gray-400',
-      id: 'gray',
-    },
-    {
-      name: 'Black',
-      class: 'bg-gray-900',
-      selectedClass: 'ring-gray-900',
-      id: 'black',
-    },
+    { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400',id:'white' },
+    { name: 'Gray', class: 'bg-gray-200', selectedClass: 'ring-gray-400', id:'gray' },
+    { name: 'Black', class: 'bg-gray-900', selectedClass: 'ring-gray-900',id:'black' },
   ];
 
   const sizes = [
-    { name: 'XXS', inStock: true, id: 'xxs' },
-    { name: 'XS', inStock: true, id: 'xs' },
-    { name: 'S', inStock: true, id: 's' },
-    { name: 'M', inStock: true, id: 'm' },
-    { name: 'L', inStock: true, id: 'l' },
-    { name: 'XL', inStock: true, id: 'xl' },
-    { name: '2XL', inStock: true, id: '2xl' },
-    { name: '3XL', inStock: true, id: '3xl' },
+    { name: 'XXS', inStock: true, id:'xxs' },
+    { name: 'XS', inStock: true, id:'xs' },
+    { name: 'S', inStock: true, id:'s' },
+    { name: 'M', inStock: true, id:'m' },
+    { name: 'L', inStock: true , id:'l'},
+    { name: 'XL', inStock: true, id:'xl' },
+    { name: '2XL', inStock: true , id:'2xl'},
+    { name: '3XL', inStock: true , id:'3xl'},
   ];
 
   useEffect(() => {
@@ -87,15 +72,10 @@ function ProductForm() {
       setValue('highlight2', selectedProduct.highlights[1]);
       setValue('highlight3', selectedProduct.highlights[2]);
       setValue('highlight4', selectedProduct.highlights[3]);
-      setValue(
-        'sizes',
-        selectedProduct.sizes.map((size) => size.id)
-      );
-      setValue(
-        'colors',
-        selectedProduct.colors.map((color) => color.id)
-      );
+      setValue('sizes', selectedProduct.sizes.map(size=>size.id));
+      setValue('colors', selectedProduct.colors.map(color=>color.id));
     }
+
   }, [selectedProduct, params.id, setValue]);
 
   const handleDelete = () => {
@@ -113,27 +93,19 @@ function ProductForm() {
           const product = { ...data };
           product.images = [
             product.image1,
-            product.image2,
+            product.image2, 
             product.image3,
             product.thumbnail,
           ];
           product.highlights = [
             product.highlight1,
-            product.highlight2,
+            product.highlight2, 
             product.highlight3,
             product.highlight4,
           ];
           product.rating = 0;
-          if (product.colors) {
-            product.colors = product.colors.map((color) =>
-              colors.find((clr) => clr.id === color)
-            );
-          }
-          if (product.sizes) {
-            product.sizes = product.sizes.map((size) =>
-              sizes.find((sz) => sz.id === size)
-            );
-          }
+          product.colors = product.colors.map(color=>colors.find(clr=>clr.id===color));
+          product.sizes = product.sizes.map(size=>sizes.find(sz=>sz.id===size));
 
           delete product['image1'];
           delete product['image2'];
@@ -152,6 +124,7 @@ function ProductForm() {
           } else {
             dispatch(createProductAsync(product));
             alert.success('Product Created');
+            // TODO: these alerts should check if API failed
             reset();
           }
         })}
@@ -248,7 +221,8 @@ function ProductForm() {
                     <>
                       <input
                         type="checkbox"
-                        {...register('colors', {})}
+                        {...register('colors', {
+                        })}
                         key={color.id}
                         value={color.id}
                       />{' '}
@@ -270,7 +244,8 @@ function ProductForm() {
                     <>
                       <input
                         type="checkbox"
-                        {...register('sizes', {})}
+                        {...register('sizes', {
+                        })}
                         key={size.id}
                         value={size.id}
                       />{' '}
@@ -466,7 +441,8 @@ function ProductForm() {
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
                     <input
                       type="text"
-                      {...register('highlight1', {})}
+                      {...register('highlight1', {
+                      })}
                       id="highlight1"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     />
@@ -484,7 +460,8 @@ function ProductForm() {
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
                     <input
                       type="text"
-                      {...register('highlight2', {})}
+                      {...register('highlight2', {
+                      })}
                       id="highlight2"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     />
@@ -502,7 +479,8 @@ function ProductForm() {
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
                     <input
                       type="text"
-                      {...register('highlight3', {})}
+                      {...register('highlight3', {
+                      })}
                       id="highlight3"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     />
@@ -520,7 +498,8 @@ function ProductForm() {
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
                     <input
                       type="text"
-                      {...register('highlight4', {})}
+                      {...register('highlight4', {
+                      })}
                       id="highlight4"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     />
